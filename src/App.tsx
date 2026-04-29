@@ -1,15 +1,30 @@
-import { Heading } from './components/Heading';
-import './styles/theme.css';
-import './styles/global.css';
+import { Home } from "./pages/Home";
+import "./styles/theme.css";
+import "./styles/global.css";
+import { useState } from "react";
+import type { TaskStateModel } from "./models/TaskStateModel";
+import { TaskContextProvider } from "./contexts/TaskContext";
 
+const initialState: TaskStateModel = {
+  tasks: [],
+  secondsRemaining: 0,
+  formattedSecondsRemaining: "00:00",
+  activeTask: null,
+  currentCycle: 0,
+  config: {
+    workTime: 25,
+    shortBreakTime: 5,
+    longBreakTime: 15,
+  },
+};
 
 export function App() {
-  console.log("App component rendered");
+  const [state, setState] = useState(initialState);
+
   return (
-    // react fragment usado pra quando nao queremos adicionar uma div para os elementos
-    <> 
-      <Heading />
-      <p>Meu nome é Lucas</p>
-    </>
+    //o valor que importa é o value do provider
+    <TaskContextProvider>
+      <Home />;
+    </TaskContextProvider>
   );
 }
